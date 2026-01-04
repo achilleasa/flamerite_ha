@@ -1,0 +1,54 @@
+{
+  "config": {
+    "abort": {
+      "already_configured": "[%key:common::config_flow::abort::already_configured_device%]",
+      "no_devices_found": "Unable to discover any Flamerite Bluetooth devices nearby.",
+      "device_no_longer_present": "Flamerite device with address `{address}` is no longer detected.",
+      "pairing_failed": "Unable to pair with Flamerite device with address `{address}`."
+    },
+    "progress": {
+      "pairing": "Please click the pair/link physical button on the fireplace. Waiting for pairing operation to complete..."
+    },
+    "step": {
+      "select_device" : {
+        "title": "Select Flamerite device",
+        "description": "Select a Flamerite device to add to Home Assistant",
+        "data": {
+          "address": "Device Bluetooth Address"
+        }
+      },
+      "bluetooth_confirm": {
+        "title": "Add discovered Flamerite device",
+        "description": "Do you want to add the Flamerite device with address `{address}` to Home Assistant?"
+      }
+    }
+  },
+  "entity": {
+    "switch": {
+      "power_state": {
+        "name": "Power"
+      }
+    },
+    "climate": {
+      "heater": {
+        "name": "Heating"
+      }
+    },
+    "select": {
+      "flame_leds": {
+        "name": "Flame color"
+      },
+      "fuel_leds": {
+        "name": "Fuel color"
+      }
+    },
+    "number": {
+      "flame_brightness": {
+        "name": "Flame"
+      },
+      "fuel_brightness": {
+        "name": "Fuel"
+      }
+    }
+  }
+}
