@@ -1,5 +1,5 @@
 [project]
-name = "flamerite-ha"
+name = "flamerite"
 version = "0.1.0"
 description = "Unofficial Home Assistant integration for controlling Flamerite fireplaces"
 authors = [
@@ -13,6 +13,9 @@ dependencies = [
     "flamerite-bt (>=0.1.1,<0.2.0)"
 ]
 
+[tool.poetry]
+packages = [{include = "flamerite", from = "custom_components"}]
+version = "0.0.0"
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
@@ -25,3 +28,7 @@ test = [
     "flake8 (>=7.3.0,<8.0.0)",
     "bandit (>=1.9.2,<2.0.0)"
 ]
+
+[tool.isort]
+profile = "black"
+skip = [".poetry"]
