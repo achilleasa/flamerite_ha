@@ -8,14 +8,13 @@ from typing import Any
 
 from flamerite_bt.const import Color
 from flamerite_bt.device import Device
-
 from homeassistant.components.select import (
     SelectEntity,
     SelectEntityDescription,
 )
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers.entity_platform import (
-    AddConfigEntryEntitiesCallback,  # noqa: RUF100
+from homeassistant.helpers.entity_platform import (  # noqa: RUF100
+    AddConfigEntryEntitiesCallback,
 )
 
 from .coordinator import FlameriteConfigEntry, FlameriteDataUpdateCoordinator

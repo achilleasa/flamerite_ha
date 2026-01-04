@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 from flamerite_bt.device import Device
-
 from homeassistant.components import bluetooth
 from homeassistant.const import CONF_ADDRESS
 from homeassistant.core import HomeAssistant
@@ -13,10 +12,14 @@ from .const import PLATFORMS
 from .coordinator import FlameriteConfigEntry, FlameriteDataUpdateCoordinator
 
 
-async def async_setup_entry(hass: HomeAssistant, entry: FlameriteConfigEntry) -> bool:
+async def async_setup_entry(
+    hass: HomeAssistant, entry: FlameriteConfigEntry
+) -> bool:
     """Set up Flamerite Fireplace from a config entry."""
 
-    ble_device = bluetooth.async_ble_device_from_address(hass, entry.data[CONF_ADDRESS])
+    ble_device = bluetooth.async_ble_device_from_address(
+        hass, entry.data[CONF_ADDRESS]
+    )
     if not ble_device:
         raise ConfigEntryNotReady(
             f"Couldn't find a nearby Flamerite device for address: {
@@ -39,7 +42,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: FlameriteConfigEntry) ->
     return True
 
 
-async def async_unload_entry(hass: HomeAssistant, entry: FlameriteConfigEntry) -> bool:
+async def async_unload_entry(
+    hass: HomeAssistant, entry: FlameriteConfigEntry
+) -> bool:
     """Unload a config entry."""
 
     await entry.runtime_data.data.disconnect()

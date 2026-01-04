@@ -5,9 +5,8 @@ from __future__ import annotations
 import asyncio
 from typing import Any
 
-from flamerite_bt.device import Device
 import voluptuous as vol
-
+from flamerite_bt.device import Device
 from homeassistant.components import bluetooth
 from homeassistant.config_entries import ConfigFlow, ConfigFlowResult
 from homeassistant.const import CONF_ADDRESS
