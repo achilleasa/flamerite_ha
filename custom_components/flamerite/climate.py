@@ -8,7 +8,10 @@ from typing import Any
 
 from flamerite_bt.const import THERMOSTAT_MAX, THERMOSTAT_MIN, HeatMode
 from flamerite_bt.device import Device
-
+from homeassistant.components.climate import (
+    ClimateEntity,
+    ClimateEntityDescription,
+)
 from homeassistant.components.climate.const import (
     FAN_HIGH,
     FAN_LOW,
@@ -16,14 +19,10 @@ from homeassistant.components.climate.const import (
     ClimateEntityFeature,
     HVACMode,
 )
-from homeassistant.components.climate import (
-    ClimateEntity,
-    ClimateEntityDescription,
-)
 from homeassistant.const import ATTR_TEMPERATURE, UnitOfTemperature
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers.entity_platform import (
-    AddConfigEntryEntitiesCallback,  # noqa: RUF100
+from homeassistant.helpers.entity_platform import (  # noqa: RUF100
+    AddConfigEntryEntitiesCallback,
 )
 
 from .coordinator import FlameriteConfigEntry, FlameriteDataUpdateCoordinator

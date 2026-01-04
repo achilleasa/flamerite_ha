@@ -1,7 +1,6 @@
 """Base class definition for Flamerite entities."""
 
 from flamerite_bt.device import Device
-
 from homeassistant.core import callback
 from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.entity import EntityDescription

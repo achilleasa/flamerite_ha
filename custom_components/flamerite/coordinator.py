@@ -1,10 +1,9 @@
 """Coordinator for the Flamerite Fireplace integration."""
 
-from datetime import timedelta
 import logging
+from datetime import timedelta
 
 from flamerite_bt.device import Device
-
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator

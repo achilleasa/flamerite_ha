@@ -8,15 +8,14 @@ from typing import Any
 
 from flamerite_bt.const import BRIGHTNESS_MAX, BRIGHTNESS_MIN
 from flamerite_bt.device import Device
-
 from homeassistant.components.number import (
     NumberEntity,
     NumberEntityDescription,
     NumberMode,
 )
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers.entity_platform import (
-    AddConfigEntryEntitiesCallback,  # noqa: RUF100
+from homeassistant.helpers.entity_platform import (  # noqa: RUF100
+    AddConfigEntryEntitiesCallback,
 )
 
 from .coordinator import FlameriteConfigEntry, FlameriteDataUpdateCoordinator
