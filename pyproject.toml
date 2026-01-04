@@ -1,0 +1,27 @@
+[project]
+name = "flamerite-ha"
+version = "0.1.0"
+description = "Unofficial Home Assistant integration for controlling Flamerite fireplaces"
+authors = [
+    {name = "Achilleas Anagnostopoulos",email = "achilleas.imap.mbox@gmail.com"}
+]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.13.2,<4.0.0"
+dependencies = [
+    "homeassistant (>=2025.12.5,<2026.0.0)",
+    "flamerite-bt (>=0.1.1,<0.2.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+test = [
+    "black (>=25.12.0,<26.0.0)",
+    "isort (>=7.0.0,<8.0.0)",
+    "flake8 (>=7.3.0,<8.0.0)",
+    "bandit (>=1.9.2,<2.0.0)"
+]
