@@ -52,3 +52,13 @@ jobs:
         run: poetry run flake8 .
       - name: Run bandit
         run: poetry run bandit .
+  validate-hacs:
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: HACS validation
+        uses: "hacs/action@main"
+        with:
+          category: "integration"
+      - uses: "actions/checkout@v4"
+      - uses: "home-assistant/actions/hassfest@master"
+
