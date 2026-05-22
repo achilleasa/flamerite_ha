@@ -5,6 +5,14 @@
     {
       "local_name": "NITRAFlame",
       "connectable": true
+    },
+    {
+      "local_name": "Flamerite",
+      "connectable": true
+    },
+    {
+      "local_name": "Flamerite ",
+      "connectable": true
     }
   ],
   "codeowners": [

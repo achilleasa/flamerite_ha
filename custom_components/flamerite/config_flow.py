@@ -15,6 +15,29 @@ from homeassistant.helpers.device_registry import format_mac
 from .const import DOMAIN
 
 
+async def _pair_device(device: Device) -> None:
+    """Connect to the device for pairing, then disconnect."""
+    try:
+        await device.connect(retry_attempts=20)
+    finally:
+        if device.is_connected:
+            await device.disconnect()
+
+
+def _is_supported_discovery(
+    disc_info: bluetooth.BluetoothServiceInfoBleak,
+) -> bool:
+    """Return true if the discovered Bluetooth device is supported."""
+    if not disc_info.advertisement:
+        return False
+
+    if Device.is_supported_device(disc_info.advertisement):
+        return True
+
+    name = (disc_info.name or "").strip()
+    return name in {"NITRAFlame", "Flamerite"}
+
+
 class FlameriteConfigFlow(ConfigFlow, domain=DOMAIN):
     """Handle a config flow for Flamerite Fireplace."""
 
@@ -60,10 +83,9 @@ class FlameriteConfigFlow(ConfigFlow, domain=DOMAIN):
                 continue
 
             # Check for supported devices
-            if not disc_info.advertisement or not Device.is_supported_device(
-                disc_info.advertisement
-            ):
+            if not _is_supported_discovery(disc_info):
                 continue
+
             flamerite_addresses.add(address)
 
         # Check if no compatible devices were found
@@ -120,9 +142,7 @@ class FlameriteConfigFlow(ConfigFlow, domain=DOMAIN):
             # Create NITRA device and attempt to connect. This will fail until
             # the user clicks the # pair/link button on the physical device.
             device = Device(ble_device)
-            pair_task = self.hass.async_create_task(
-                device.connect(retry_attempts=20)
-            )
+            pair_task = self.hass.async_create_task(_pair_device(device))
             self._pair_task = pair_task
 
         # We are still trying to pair.
