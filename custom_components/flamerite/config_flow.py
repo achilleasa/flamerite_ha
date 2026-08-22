@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import asyncio
+import logging
 from typing import Any
 
 import voluptuous as vol
@@ -14,14 +15,33 @@ from homeassistant.helpers.device_registry import format_mac
 
 from .const import DOMAIN
 
+_LOGGER = logging.getLogger(__name__)
+
+
+class PairingFailedError(Exception):
+    """Raised when a pairing connection does not complete."""
+
 
 async def _pair_device(device: Device) -> None:
     """Connect to the device for pairing, then disconnect."""
+    pair_error: BaseException | None = None
     try:
         await device.connect(retry_attempts=20)
+        if not device.is_connected:
+            _LOGGER.debug(
+                "Pairing connection did not complete for %s", device.mac
+            )
+            raise PairingFailedError
+    except BaseException as ex:
+        pair_error = ex
+        raise
     finally:
         if device.is_connected:
-            await device.disconnect()
+            try:
+                await device.disconnect()
+            except Exception as ex:
+                if pair_error is None:
+                    raise PairingFailedError from ex
 
 
 def _is_supported_discovery(
@@ -129,6 +149,8 @@ class FlameriteConfigFlow(ConfigFlow, domain=DOMAIN):
 
         pair_task = self._pair_task
         if not pair_task:
+            await bluetooth.async_request_active_scan(self.hass)
+
             # Get ble device handle for the selected address
             ble_device = bluetooth.async_ble_device_from_address(
                 self.hass, address
@@ -160,7 +182,11 @@ class FlameriteConfigFlow(ConfigFlow, domain=DOMAIN):
             return self.async_show_progress_done(
                 next_step_id="pairing_complete"
             )
-        except asyncio.exceptions.CancelledError:
+        except (
+            asyncio.exceptions.CancelledError,
+            PairingFailedError,
+            UnicodeDecodeError,
+        ):
             return self.async_abort(
                 reason="pairing_failed",
                 description_placeholders={"address": address},

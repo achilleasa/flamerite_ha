@@ -17,14 +17,15 @@ async def async_setup_entry(
 ) -> bool:
     """Set up Flamerite Fireplace from a config entry."""
 
+    await bluetooth.async_request_active_scan(hass)
+
     ble_device = bluetooth.async_ble_device_from_address(
         hass, entry.data[CONF_ADDRESS]
     )
     if not ble_device:
         raise ConfigEntryNotReady(
-            f"Couldn't find a nearby Flamerite device for address: {
-                entry.data[CONF_ADDRESS]
-            }"
+            "Couldn't find a nearby Flamerite device for address: "
+            f"{entry.data[CONF_ADDRESS]}"
         )
 
     # Connect to the device.
